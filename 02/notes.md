@@ -1,0 +1,67 @@
+# 2. Nástroje generického programování: dědičnost, rozhraní, polymorfismus, generická implementace abstraktních datových typů - třídy s typovým parametrem
+- snaha podchytit společné vlastnosti různých algoritmů/datových struktur
+    - **umožnit záměnu** různých specifických implementací splňující nějaká obecná kritéria
+    - **umožnit sdílení** generického kódu napříč specifickými implementacemi
+- **dědičnost**
+    - třídám lze pomocí dědičnosti dodat další funkcionalitu, či ji upravit (**přepsání metody**)
+    - ve většině programovacích jazycích lze dědit pouze od jednoho předka (C++ to umí)
+        - jinak hrozí kolize implementací
+    - typicky každá třída má prapředka `Object`
+    - potomek se může vždy vydávat za rodiče
+- **rozhraní**
+    - pomocí signatur (hlavičky metod) a kontraktu (dokumentační popis) definujeme, co má metoda umět
+        - neříká nic o tom, jak jsou metody implementovány
+        - musí splnit kontrakt
+    - pokud třída implementuje rozhraní, musí implementovat všechny metody rozhraní (pokud daná třída není abstraktní)
+    - jedna třída může implementovat více rozhraní
+    - klientský kod pak s rozhraním pracuje, jako kdyby to byla třída
+        - volá jeho metody
+   - příklad
+        - různé typy řazení
+        - rozhraní `ISorter` a mnohé implementace
+            - `BubbleSorter`
+            - `HeapSorter`
+            - `QuickSorter`
+- **polymorfismus**
+    - instance potomka lze použít všude kde se očekává předek
+        - parametr metody
+        - pole předků
+    - s potomkem nakládáme jako s předkem
+    - metoda `testSorters` přijímá instance třídy `Sorter`
+        - lze do ní poslat jakoukoliv třídu, která od této třídy dědí
+- **generická implementace abstraktních datových typů - třídy s typovým parametrem**
+    - nezabývají se rozdíly, ale společnými vlastnostmi
+    - definují možné operace nad daty
+        - nedefinují způsob jejich uložení a způsob provedení operací (implementaci)
+    - určuje podmnožinu operací, které je možné provádět
+    - složitost operací není určená
+    - kolekce
+        - zásobník/fronta
+            - implementace polem
+            - implementace spojovým seznamem
+        - seznam
+            - ...
+    - **zásobník**       
+        - *Last In, First Out* 
+        - přidej prvek na konec
+        - vyber prvek na konci
+        - odeber prvek z konce
+    - **fronta**
+        - *First In, First Out*
+        - přidej prvek na začátek fronty
+        - vyber prvek zezačátku fronty
+        - odeber zezačátku
+    - mělo by být uplně jedno, s jakým datový typem tyto kolekce pracují
+        - `int`, `String`, `Person`,...
+        - k tomu slouží třídy s typovým parametrem
+    - **třídy s typovým parametrem**
+        - také název **generické třídy**
+        - pomocí nějaké třídy naimplementujeme vybrané ADT
+        - při vytvoření instance této třídy vybereme typ `T`, se kterým toto ADT pracuje
+            - typem `T` musí být třída, nikoliv primitivní typ (`int`, `char`,...)
+        - může tedy pracovat s čímkoliv
+                - je třeba použít obalovací typy `Double`, `Float:`
+        - v Javě **nelze** vytvořit pole s typovým parametrem `T`
+        - pokud v Javě chci, aby parametr něco uměl
+            - vytvořením rozhraní `IProcessable`
+            - pak typový parametr určím `<T extends IProcessable>`
