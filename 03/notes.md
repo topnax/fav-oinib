@@ -15,6 +15,28 @@
     -funkce `g(n)` patří do `Omega(f(n))` když `g(n)` "roste **roste stejně rychle nebo rychleji než f(n)**"
     - platí zde obrácené vztahy
         - `Om(e^n) c Om(2^n) c ... c Om(log(n)) c Om(1)`
-    
-    
+    - příslušnost do `Om(f(n))`, kde `f(n)` roste pomalu, **neimplikuje efektivitu**
+    - příslušnost do `Om(f(n))`, kde `f(n)` roste rychle, **implikuje neefektivitu**
+- **Theta notace**
+    - Pokud `g(n) ∈ O(f(n))` a zároveň `g(n) ∈ Om(f(n))`, pak `g(n) ∈ Theta(f(n))`
+    - `g(n)` neroste ani rychleji ani pomaleji než `f(n)`, roste stejně rychle
+    - graf `g(n)` lze od jistého `n0` uzavřít mezi grafy `c1 * f(n)` a `c2 * f(n)` (**c1 < c2**)
+    - množiny `Theta(e^n), Theta(2^n), Theta(n^3)`, jsou **disjunktní** - žádná `g(x)` nepatří do obou současně
+    - příslušnost `g(n)` do `Theta(f(n))` docela dobře popisuje chování `g(n)`
+    - efektivita se dá seřadit podle pořadí odpovídajícíh `O(f(n))` množin
+    - pokud `g1(n) = 1000n` a `g2(n) = n log2(n)`, pak pro všechna realistická `n` platí `g2(n) < g1(n)`, přestože `g2(n) ∈ Theta(nlog(n))` a `g1(n) ∈ Theta(n)`
+
+- `O`, `Omega` a `Theta` jsou množiny fcí, význam může být následující:
+    - čas výpočtu pro jakýkoli vstup velikosti `n` 
+    - čas výpočtu pro nejlepší možný vstup vstup velikosti `n` 
+    - čas výpočtu pro nejhorší možný vstup vstup velikosti `n` 
+    - množství paměti nutné pro vstup velikosti `n`
+
+- mnemotechnická poznámka
+    - dobré zrpávy sdělujeme v `O` notaci
+        - ta věc není pomalejší než `f(x)`
+    - špatné zprávy sdělujeme v `Omega` notaci
+        - ta věc není rychlejší než `f(x)`
+    - přesné zprávy sdělujeme v `Theta` notaci
+        - nároky té věci rostou s velikostí vstpu stejně rychle jako `f(x)`
 
