@@ -1,0 +1,52 @@
+# 5. Abstraktní datové struktury – motivace, účel, možné funkce, kolekce
+- nezabývají se rozdíly, ale společnými vlastnostmi
+    - definují možné operace nad daty
+        - nedefinují způsob jejich uložení a způsob provedení operací (implementaci)
+    - určuje podmnožinu operací, které je možné provádět
+    - složitost operací není určená
+    - kolekce
+        - zásobník/fronta
+            - implementace polem
+            - implementace spojovým seznamem
+        - seznam
+            - ...
+    - **zásobník**
+        - *Last In, First Out*
+        - přidej prvek na konec
+        - vyber prvek na konci
+        - odeber prvek z konce
+    - **fronta**
+        - *First In, First Out*
+        - přidej prvek na začátek fronty
+        - vyber prvek zezačátku fronty
+        - odeber zezačátku
+    - mělo by být uplně jedno, s jakým datový typem tyto kolekce pracují
+        - `int`, `String`, `Person`,...
+        - k tomu slouží třídy s typovým parametrem
+- ADT je obecný myšlenkový koncept, přesahující konktértní jazyk
+- **součástí ADT je sémantika, význam**
+- **rozhraní** => implementace konceptu ADT v Javě
+    - říká co umí (hlavičky metod)
+    - neříká jak se to dělá (těla metod)
+- kolekce
+    - může se chovat jako seznam prvků s číselným indexem (řada), nebo jako množina (bez indexů, nemá pořadí)
+    - přidat prvek (add)
+        - začátek
+        - konec
+        - před,za nějaký prvek
+        - s nějakým klíčem
+    - vybrat prvek (get)
+        - na začátku
+        - na konci
+        - na nějakém indexu, místě
+        - s nějakým klíčem
+            - s extrémním (nejvyšším, nejnižším) klíčem
+    - zjistit, zdali kolekce obsahuje nějaký prvek
+    - odebrat prvek (remove)
+        - prvek je z kolekce odstraněn
+        - kdekoliv...
+        - dle klíče
+    - ideální kolekce, všechyn tyto možnosti v čase O(1)
+        - čas nezávisí na počtu prvků, které již v kolekci jsou
+        - neexistuje
+
