@@ -1,4 +1,4 @@
-# 7. ADT Fronta, implementace spojovou strukturou, implementace paralelními poli, pojem iterátor, typické příklady použití
+# 7. ADT Fronta, implementace spojovou strukturou, typické příklady použití
 
 - operace:
     - přidání prvku na konec (enqueue
@@ -22,18 +22,4 @@
         - index prvnvího rpvku
         - počet obsazených indexů
     - postupně se uvolňuje místo na začátku pole, při přirávání prvků je možné ho využí- přidání prvku může expandovat pole, pak složitost `Theta(n)`
-- **iterátor**
-    - návrhový vzor určený k interaci nějaké kolekce
-    - operace
-        - vybrání dat napravo `get()`
-        - posunutí doprava `next()`
-        - vrácení na začátek `moveToFirst()`
-        - přidání prvku na pozici `insert()`
-        - odstranění napravo `remove()`
-        - duplikace iterátoru `clone()`
-        - implementace stejné jako u seznamu
-    - jednotlivé iterátory o sobě nevědí
-    - jeden iterátor smaže prvek na který odkazuje jiný iterátor
-- **paralelní pole**
-    - jedno pole pro data
-    - jedno pole obsahující posloupnost s indexy následovníky        
+- použití při zpracovávání úkolů, událostí v pořadí v jakém přišly
