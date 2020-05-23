@@ -1,0 +1,39 @@
+# 7. ADT Fronta, implementace spojovou strukturou, implementace paralelními poli, pojem iterátor, typické příklady použití
+
+- operace:
+    - přidání prvku na konec (enqueue
+    - vybrání prvku na začátku (peek)
+    - odebrání prvku na začátku (dequeue)
+- implementováno spojovou strukturou nebo polem
+- implementace spojovou strukturou podobně jako u zásobníku
+    - atributy `first` a `last`
+    - pokud je fronta prázdná, reference na přidávanou položožku ve `first` a `last`
+    - přidání další položky:
+        - vytvoření nové spojky
+        - aktuální `last` nastaven `next` na novou spojku
+        - do nové spojky přidána přidávaná data
+        - `last` nastaven na novou spojku
+    - časy obdobné zásobníku
+    - všechny operace v čase `Theta(1)`
+    - je možné, že velikost spojovacího dílku v paměti je vfětší než velikost samotných dat
+- implementace polem
+    - pro odebrání není vhodné přesouvat prvky
+    - obalovací struktura si drží
+        - index prvnvího rpvku
+        - počet obsazených indexů
+    - postupně se uvolňuje místo na začátku pole, při přirávání prvků je možné ho využí- přidání prvku může expandovat pole, pak složitost `Theta(n)`
+- **iterátor**
+    - návrhový vzor určený k interaci nějaké kolekce
+    - operace
+        - vybrání dat napravo `get()`
+        - posunutí doprava `next()`
+        - vrácení na začátek `moveToFirst()`
+        - přidání prvku na pozici `insert()`
+        - odstranění napravo `remove()`
+        - duplikace iterátoru `clone()`
+        - implementace stejné jako u seznamu
+    - jednotlivé iterátory o sobě nevědí
+    - jeden iterátor smaže prvek na který odkazuje jiný iterátor
+- **paralelní pole**
+    - jedno pole pro data
+    - jedno pole obsahující posloupnost s indexy následovníky        
