@@ -54,6 +54,10 @@
 
 
 ## Vlákna
+- mohou být implementována v
+    - jádře
+    - uživatelském prostoru
+    - kombinace
 - vlákna v procesu sdílejí atributy procesu
     - adresní prostor
     - otevřené soubory
