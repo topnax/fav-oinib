@@ -199,6 +199,13 @@ V(s);
         - **ANO** - aktuální proces je pozastaven a jeden z čekajících reaktivován
         - **NE** - pokračuje původní proces
 
-
-    
+### Bariéry
+- synchronizační mechanismus pro **skupiny procesů**
+- aplikace - skládá se z fází
+    - žádný proces nesmí do následující fáze dokud všechny procesy nedokončily fázi předchozí
+- na konci každé fáze - synchronizace na bariéře
+    - volajícího pozastaví
+    - dokud všechny procesy také nedorazí do bariéry
+- všechny procesy pak opustí bariéru současně
+- např. implementace pomocí monitorů
 
