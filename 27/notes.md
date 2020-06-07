@@ -59,8 +59,8 @@
     - po načtení úlohy do oblasti je obvykle část oblasti nevyužitá
     - snaha umístit úlohu do nejmenší oblasti, do které se vejde
 ## Pevné rozdělení sekcí
-    1. více front, každá úloha do nejmenší oblasti, kam se vejde
-    2. jedna pronta - po uvolnění oblasti z fronty vybrat největší úlohu, která se veje (**tj. není FIFO**)
+1. více front, každá úloha do nejmenší oblasti, kam se vejde
+2. jedna pronta - po uvolnění oblasti z fronty vybrat největší úlohu, která se veje (**tj. není FIFO**)
 
 ![](img/hard_division.png)
 
@@ -176,14 +176,15 @@
     - přepnutí mezi úlohami i přepnutí do jádra (volání služby OS) - relativně drahé (čas)
 
 - stránky jsou mapovány na rámce v RAM, nebo jsou uložené v odkládací paměti na disku
+- **každý proces má svojí tabulku stránek**
 
-![](paging_2.png)
+![](img/paging_2.png)
 
-![](paging_3.png)
+![](img/paging_3.png)
 
-![](paging_4.png)
+![](img/paging_4.png)
 
-![](paging_5.png)
+![](img/paging_5.png)
 
 - **číslo rámce**
     - udává, ve kterém rámci v RAM je stránka uložena
@@ -206,7 +207,122 @@
     - součástí PCB
         - **PCB** obsahuje info, kde leží jeho tabulka stránek
     -  velikost záznam
+- **příklad výpočtu**
+    - je dána `VA(p1) = 100`, určete _FA_
+    - velikost stránky jsou 4KB (4096 bytů)
+    - tabulka stránek procesu _p1_ následující:
 
+        |Číslo stránky|rámec|
+        |---|---|
+        |0|1|
+        |1|2|
+        |2|-|
+        |3|0|
+    - postup výpočtu:
+        1. virtuální adresu rozdělíme na číslo stránky a offset
+            - `str = VA div 4096` (celočíselné dělení, 4096 je velikost stránky)
+            - `offset = VA mod 4096` (zbytek po dělení)
+        2. převod pomocí tabulky stránek
+            ```
+            tab_str[0] = 1 (pro stránku 0 je číslo rámce 1)
+            tab_str[1] = 2
+            tab_str[2] = -- (stránka není namapována)
+            tab_str[3] = 0
+            ```
+            - pro `VA = 100` je stránka `0`, offset `100` => **tedy rámec 1**
+        3. z čísla rámce a offsetu sestavíme fyzickou adresu
+            ```
+            FA = ramec * 4096 + offset
+            FA = 1 * 4096 + 100
+            FA = 4196 (máme fyzickou adresu) 
+            ```
+            - v reálném systému dělení znamená rozdělení na vyšší a nižší bity adresy (proto mocnina dvou velikost str.)
+                - nižší bity - offset
+                - vyšší bity - číslo stránky
+- náročnost:
+    - velký rozhsah tabulky stránek
+        - např. 1 milion stránek, ne všechny obsazeny
+    - rychlý přístup
+        - nemůžeme pokaždé přistupovat k tabulce stránek
+        - různá HW řešení, kopie části tabulky v MMU -> **TLB cache**
+- **vnější fragmentace** (zůstávají nepřidělitelné úseky paměti) při stránkování nenastává, všechny stránky jsou přidělitelné (jsou stejně velké)
+- **vnitřní fragmentace**
+    - část přidělené oblasti je **nevyužita** (dostaneme přidělenou stránku, ale využijeme z ní jen část)
+    - při stránkování vnitřní fragmentace **nastává**
+        - v průměru polovina poslední stránky procesu je prázdná
+- **čisté stránkování** => bez odkládací oblasti (swapu)
+    - avšak nejčastěji se používá stránkování s využitím swapu
+- **OS udržuje**
+    - 1 tabulka rámců
+    - tabulku stránek pro každý proces
+
+    
+
+
+### Výpadek stránky
+- viz příklad, pro adresu 8192, str 2, offset 0
+- stránka není mapována
+- výpadek stránky způsobí vyjímku, zachycena OS (pomocí přerušení)
+- OS **iniciuje zavádění** stránky a **přepne na jiný** proces
+- po zavedení stránky OS upraví mapování (tabulku stránek)
+- proces může pokračovat
+- vyřešit: KAM stránku zavést a ODKUD?
+- pokud daná stránka procesu není na určitý rámec ve fyzické paměti a chceme k ní přistoupit
+- dojde k **výpadu stránky** - vyvolání přerušení operačního systému
+- operační systém se postará o to, aby danou stránk u zavedl do nějakého rámce ve fyzické paměti, nastavil mapování a poté může přístup proběhnout
+
+### Tabulka rámců
+- pro správu fyzické paměti RAM
+- je třebga informace, které rámce jsou volné a obsazené
+- mapuje číslo stránky na číslo fyzického rámce
+- další informace jako např. příznaky ochrany
+- řeší problémy relokace a ochrany
+    - relokace - mapování VA na FA
+    - ochrana - v tabulce stránek uvedeny **pouze** stránky, ke kterým má proces **přístup** (jinam se nedostane)
+- přepnutí na jiný proces 
+    - MMU přepne na jinou tabulku stránek
+
+### Velikost tabulky stránek
+- VA 32 bitů
+    - 12 bitů offset (pozice ve stránce - stránka 4KB)
+    - 20 bitů číslo stránky
+        - stránek je 2^20 (cca přes milion)
+        - každá položka zabírá 4B .. (2^20)*4B=4MB zabírá pro **každý** proces
+    - proces využívá jen část prostoru VA
+        - kód
+        - data (inicializovaná, a neinicializovaná)
+        - sdílené knihovny a jejich data
+    - od nejvyšší adresy zásobník - roste dolů
+
+### TLB
+- problém:
+    - každý přístup do paměti - sáhne do tabulky stránek
+        - 2x více paměťových přístupů
+        - musíme sáhnout do tabulky stránek a pak do paměti kam chceme
+- tento problém TLB řeší
+- jedná se o HW cache
+- přepnutí kontextu na jiný proces
+    - problém - vymazání cache
+    - než se TLB opět zaplní - pomalý přístup
+- optimalizuje rychlost převodu VA na FA
+
+### Invertovaná tabulka stránek
+- položky pro každý **fyzický rámec**
+    - omezený počet - dán velikostí RAM
+    - VA 64bitů, 4KB stránky, 256MB RAM - 65536
+
+### Stránkování na žádost
+- vytvoření procesu
+    - vytvoří prázdnou tabulku stránek
+    - alokace místa na disku pro odkládání stránek
+    - některé implementace - odkládací oblast inicializuje kódem programu a daty ze spustitelného souboru
+- při běhu
+    - žádná stránka v paměti
+    - 1. přístup =>  **výpadek stránky (page fault)**
+    - OS zavede požadovanou stránku do paměti
+    - postupně se v paměti vytvoří tzv. **pracovní množina** stránek
+- má-li proces svou **pracovní množinu stránek** v paměti, může pracovat bez mnoha výpadků
+- pracovní množina stránek daného procesu - kolik stránek mjsí mít ve fyzické paměti, aby mohl nějaký čas pracovat bez výpadků stránky
 
 
 ## Segmentace
