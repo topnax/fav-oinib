@@ -18,7 +18,7 @@
 
 ### 1. CPU řídí přímo periferii
 - CPU přímo vydává potřebné signály
-- CP/U dekóduje signály poskytované zařízením
+- CPU dekóduje signály poskytované zařízením
 - nejjednodušší HW
 - nejméně efektivní využití CPU
 - jen v jednoduchých mikroprocesorem řízených zařízeních (dálkové ovládání televize)
@@ -42,7 +42,7 @@
     - CPU zapíše data do bufferu
         - informuje řadič o požadované operaci
     - po dokončení výstupu zařízení nastaví příznak, který může CPU otestovat
-    - pokud přenos dopadl dobře, může vloži další data
+    - pokud přenos dopadl dobře, může vložit další data
     - CPU musí dělat všechno (programové I/O)
     - významnou část času stráví CPU **čekáním na dokončení I/O operace**
 
@@ -56,7 +56,7 @@
 
 ### 4. Řadič může přistupovat k paměti pomocí DMA
 - DMA přenosy mezi pamětí a I/O zařízením
-- CPU inicializuje přenost, ale sám ho nevykonává
+- CPU inicializuje přenos, ale sám ho nevykonává
 - řadič DMA - speciální obvod, zajišťuje blokové přenosy mezi I/O zařízením a pamětí
 - postup:
     1. CPU zadá požadavek řadiči DMA (adresu I/O zařízení, adresu v RAM, počet bytů)
@@ -169,7 +169,7 @@
         - pomalá zařízení - čtení/zápis s využitím bufferu
     - hlášení chyb
     - jednotná velikost bloku pro bloková zařízení
-    - v moderních OS se zařízení jeví jako objekty v souborovém sytéméu (v mnoha OS je tato vrstva součástí logického souborového systému)
+    - v moderních OS se zařízení jeví jako objekty v souborovém systému (v mnoha OS je tato vrstva součástí logického souborového systému)
 
 ### 4. I/O SW v uživatelském režimu
 - programátor používá v programech **I/O funkce** nebo **příkazy** jazyka
@@ -232,12 +232,13 @@
         - data postupně ukládána na několik disků
         - zaplní se první disk, pak druhý, atd.
         - snadné zvětšení kapacity, při poruše disku ztratíme jen část dat
-        ![](img/raid_0_chain.png)
+
     - **prokládání**
         - data ukládána na disky cyklicky po blocích
         - při poruše jednoho z disků přijde o data
         - větší rychlost čtení/zápisu
             - jeden blok z jednoho disku, druhý blok z druhého disku
+        - ![](img/raid_0_chain.png)
 
 ### RAID 1
 - mirroring => zrcadlení
@@ -245,7 +246,7 @@
 - výpadek 1 disku => nevadí
 - jednoduchá implementace => často SW
 - nevýhoda - využijeme jen polovinu kapacity
-- zápis - pomalejší (stejn á data na 2 disky)
+- zápis - pomalejší (stejná data na 2 disky)
     - ovlivněn diskem na němž bude trvat déle
 - čtení - rychlejší
     - řadič => lze střídat požadavky mezi disky 
@@ -274,6 +275,8 @@
 - odolné proti výpadku dvou disků
 - rychlost čtení srovnatelná s RAID 5
 - zápis pomalejší
+
+![](img/raid_6.png)
 
 ### RAID 10
 - kombinace RAID 0 (stripe) a RAID 1 (zrcadlo)
@@ -306,7 +309,7 @@
 
 ### HOT SPARE DISK
 - záložní disk okamžitě připravený k nahrazení vadného disku
-- při výpadku disku vp oli automaticky aktivován hot spare disk a dopočítaná data
+- při výpadku disku v poli automaticky aktivován hot spare disk a dopočítaná data
 - minimalizace rizika (časové okno)
     - pole je degradované a je třeba vyměnit disk
     - administrátor nemusí být poblíž
@@ -370,7 +373,7 @@
         - formátování, nástroj `mkfs`
 - **přímý přístup** (random access file)
     - čtení v libovolném pořadí nebo podle klíče
-- služby OS pro práci se seoubory
+- služby OS pro práci se soubory
     - většina současných OS používá základní model dle UNIXu
     - veškerý I/0 prováděn pouze pomocí souborů
         - zařízení, disky, tiskárny
@@ -378,7 +381,7 @@
     - logický virtuální souborový systém
         - volán aplikacemi
     - modul organizace souborů
-        - konkrétní souborový systém (např. ext3(
+        - konkrétní souborový systém (např. ext3)
     - ovladače zařízení 
         - pracuje s daným zařízením
         - přečte/zapíše logický blok
@@ -390,6 +393,29 @@
         - pozice v souboru
     - **ochrana a bezpečnost**
     ![](img/vfs.png)
+
+### Základní uspořádání adresáře
+1. Adresář obsahuje:
+    - jméno souboru
+    - atributy
+    - diskovou adresu souboru
+    - např. používá FAT
+
+2. Adresář obsahuje **pouze jméno + odkaz** na jinou datovou strukturu obsahující další informace jako je i-uzel (používá systéjm s i-uzly)
+
+### Hard link
+- soubor ve více podadresářích nebo pod více jmény
+- každý soubor má datovou strukturu, která ho popisuje (i-uzel)
+    - můžeme vytvořit v adresářích více odkazů na stejný soubor
+- všechny odkazy (jména) jsou rovnocenné
+- v popisu souboru (i-uzlu) musí být počet odkazů
+- soubor zanikne při zrušení posledního odkazu
+
+### Symbolický link
+- nový typ souboru, obsahuje jméno odkazovaného souboru
+- OS místo symbolického odkazu otevře odkazovaný soubor
+- obecnější - může obsahovat cokoliv
+- větší režie
 
 ### Kontinuální alokace
 - soubor jako kontinuální posloupnost diskových bloků
@@ -412,7 +438,7 @@
 ![](img/list.png)
 
 ### FAT
-- přesunutí odkazů do samostatné tabulyk FAT
+- přesunutí odkazů do samostatné tabulky FAT
 - **FAT (File Allocation Table)**
     - každému diskovému bloku **odpovídá** jedna položka ve FAT tabulce
     - položka FAT obsahuje číslo dalšího bloku souboru (je zároveň odkazem **na další položku** FAT!)
@@ -440,7 +466,8 @@
 - defragmentace
     - **úplná** 
         - obsazené bloky souborů půjdou na disku za sebou, poté následuje volné místo
-    - **částečná** upraví se jen tak, že napřed je obsazený prostor soubory a za ním volné bloky
+    - **částečná** 
+        - upraví se jen tak, že napřed je obsazený prostor soubory a za ním volné bloky
 
 ![](img/fat_2.png)
 - nevýhodou je velikost tabulky FAT
@@ -448,6 +475,10 @@
     - každá položka alespoň 3 byty => 60MB FAT
     - výkonnostní důsledky (část FAT chceme v cache v RAM)
 - **u souborů není žádná informace o přístupových právech**
+
+![](img/fat_3.png)
+
+![](img/fat_4.png)
 
 ### NTFS
 - nativní souborový systém Windows
@@ -470,6 +501,10 @@
     - základ 11 systémových souborů
         - metadata
         - vzniknou hned při formátování svazku
+    - **MFT**
+        - **nejdůležitější!!!**
+        - záznamy o všech souborech, adresářích, metadatech
+        - hned za boot sektorem, za ním se udržuje zóna volného místa
     - defaultní velikosti clusterů:
 
         |Volume size|NTFS cluster size|
@@ -478,3 +513,117 @@
         |513MB-1024MB|1KB|
         |1025MB-2GB|2KB|
         |2GB-2TB|4KB|
+- adresáře
+    - speciální soubory
+    - B-stromy se jmény souborů a odkazy na záznamy v MFT
+- zkopírováním souboru z NTFS na FAT => ztratíme přístupová práva a alternativní datové proudy
+- způsob uložení data
+    - kódování delkou běhu
+    - od pozice **100** máme např. uloženo:
+        - A1, A2, A3, B1, B2, A4, A5, C1
+    - soubor A bude popsaný fragmenty
+    - fragment
+        - index
+        - počet bloků daného fragmentu
+    - v našem příkladě pro soubor A a dva fragmenty:
+        - 1. 100, 3 (od indexu 100 patří tři bloky souboru A)
+        - 2. 105, 2 (od indexu 105 patří dva bloky souboru A)
+
+![](img/ntfs_1.png)
+
+![](img/ntfs_2.png)
+
+- ideální případ
+    - **1 soubor = 1 fragment**
+    - výhody kontinuální alokace
+- defragmentovat můžeme jak celou partici, tak jen vybrané soubory
+- **NTFS - Sparse Files**
+    - soubor 17GB
+        - užitečná data 7GB
+        - nuly 10GB
+        - na disku zabere místo 17GB
+        - u sparse file jen 7GB
+
+![](img/ntfs_3.png)
+
+### Systémy využívající i-uzlů
+- každý soubor (a  tedy i adresář) je reprezentovaný i-uzlem
+- i-uzel (datová struktura)
+    - **metadata** popisující:
+        - vlastníka souboru
+        - přístupová práva
+        - velikost souboru
+        - **není zde název souboru**
+    - **umístění bloků na souboru disku**
+        - přímé odkazy a nepříme 1., 2. a 3. úrovně
+        - abychom věděli, jaké bloky přistupovat
+- adresář systému s i-uzly
+    - soubor obsahující dvojici:
+        - **název souboru** a **číslo odpovídajícího i-uzlu**
+
+![](img/i_node_1.png)
+
+- 1 i-uzel = 1 soubor
+- pevný počet i-uzlů = max. počet souborů na daném oddílu disku
+- pokud nám dojdou i-uzly, další soubor již nemůžeme vytvořit, ale pokud zbývají datové bloky, můžeme prodloužit stávající soubory
+- **superblock** obsahuje důležité informace
+    - příznak čistoty
+    - verze
+    - počet i-nodů
+    - velikost alokační jednotky
+    - seznam volných bloků
+
+![](img/i_node_2.png)
+
+- vlastnosti
+    - klíčové informace jsou násobně duplikovány, např. superblock
+    - bitmapa i-nodů říká, který i-node je volný
+    - bitmapa datových bloků říká, který datový blok je volný
+    - i-nody a odpovídající data jksou blízko u sebe
+    - chci vytvořit nový soubor
+        - v bitmapě najdu volný i-node
+        - dále hledám v bitmapě datových bloků volné bloky pro data
+- i-uzel obsahuje:
+    - atributy souboru:
+        - velikost souboru
+        - počet odkazů na soubor
+        - práva a pro koho jsou, časy vytvoření, modifikace
+    - diskové adresny prvních N bloků souboru
+    - více odkazů na diskové bloky obsahující další diskové adresy (případně obsahující odkazy na bloky obsahující adresy) - 1., 2., 3. nepřímé úrovně
+- tradiční pro Unix
+    - používá se `ext4` (2, 3)
+- odkazy:
+    - typicky 10-12 přímých odkazů na bloky obsahující seznam odkazů na data
+    - 1. nepřímý
+        - odkaz na datový blok obsahující seznam odkazů na data
+    - 2. nepřímý
+    - 3. nepřímý
+- nepřímé odkazy:
+    - datový blok, místo toho, aby obsahoval data souboru, tak obsahuje odkazy na další datové bloky využité souborem
+    - datový blok tedy obsahuje **metadata** (zde ukazatele), místo dat souboru
+- mohou být 1., 2. a 3. úrovně
+    - odkaz na blok z i-nodu -> data souboru (přímé odkazy)
+    - odkaz na blok z i-nodu -> metadata -> data souboru **(1.úroveň)**
+    - odkaz na blok z i-nodu -> metadata -> metadata -> data souboru **(2.úroveň)**
+    - odkaz na blok z i-nodu -> metadata -> metadata -> metadata -> data souboru **(3.úroveň)**
+
+![](img/i_node_3.png)
+
+- malé soubory
+    - přímé odkazy na datové bloky (rychlý přístup k ním)
+- velké soubory 
+    - využívají i nepřímé odkazy
+- i-uzel má pevnou velikost
+    - stejnou pro velký i malý soubor
+- výhoda i-uzlů
+    - po otevření souboru můžeme **zavést i-uzel** a případ ný blok obsahující další adresy **do paměti**, čímž urychlíme přístup k souboru
+
+
+![](img/i_node_4.png)
+![](img/i_node_5.png)
+![](img/i_node_6.png)
+![](img/i_node_7.png)
+
+- adresáře
+    - **často implementovány speciálním typem souboru**
+        
