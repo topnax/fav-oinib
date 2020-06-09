@@ -24,8 +24,6 @@ Katedra informatiky a výpočetní techniky
 }
 \date{2020}
 
-
-
 \begin{document}
 
 \frame{\titlepage}
@@ -40,8 +38,13 @@ Katedra informatiky a výpočetní techniky
 \begin{frame}
 \frametitle{Úvod}
 \begin{itemize}
-    \item Protože
-    \item Něco
+    \item nedostatek volně dostupného SW pro rozpoznávání registračních značek vozidel \textbf{mobilními telefony}
+    \item nabídnout veřejnosti možnost postavit SW stavějící na této funkcionalitě
+    \begin{itemize}
+        \item evidence vozidel v autoservisech, placených parkovištích,...
+        \item monitorování pohybu vozidel v dočasně zřízených kontrolních stanovištích
+        \item pořizování důkazního materiálu při pojistných událostech
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -53,7 +56,8 @@ Katedra informatiky a výpočetní techniky
     \begin{itemize}
 
         \item mobilní aplikace pro platformy Android a iOS vytvořená s využitím frameworku Flutter
-        \item rozpoznávání RZ realizováno pomocí OCR s kontrolou formátu identifikátoru
+        \item snímání scény fotoaparátem
+        \item rozpoznávání RZ ve scéně realizováno pomocí OCR s kontrolou formátu identifikátoru
         \item naskenované RZ a dodatečné informace ukládané do lokální SQLite databáze
         \begin{itemize}
             \item adresa místa pořízení (buď ručně zadaná nebo automaticky dohledaná dle GPS souřadnic)    
@@ -101,6 +105,7 @@ Katedra informatiky a výpočetní techniky
 
 \end{frame}
 
+\section{Oprava chyby ve frameworku Flutter}
 \begin{frame}
 \frametitle{Oprava chyby ve frameworku Flutter}
 \begin{itemize}
