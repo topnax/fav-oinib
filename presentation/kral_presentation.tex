@@ -24,8 +24,6 @@ Katedra informatiky a výpočetní techniky
 }
 \date{2020}
 
-
-
 \begin{document}
 
 \frame{\titlepage}
@@ -40,8 +38,13 @@ Katedra informatiky a výpočetní techniky
 \begin{frame}
 \frametitle{Úvod}
 \begin{itemize}
-    \item Protože
-    \item Něco
+    \item nedostatek volně dostupného SW pro rozpoznávání registračních značek vozidel \textbf{mobilními telefony}
+    \item nabídnout veřejnosti možnost postavit SW stavějící na této funkcionalitě
+    \begin{itemize}
+        \item evidence vozidel v autoservisech, placených parkovištích,...
+        \item monitorování pohybu vozidel v dočasně zřízených kontrolních stanovištích
+        \item pořizování důkazního materiálu při pojistných událostech
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -52,9 +55,10 @@ Katedra informatiky a výpočetní techniky
     \column{0.7\textwidth}
     \begin{itemize}
 
-        \item mobilní aplikace pro platformy Android a iOS vytvořená s využitím frameworku Flutter
-        \item rozpoznávání RZ realizováno pomocí OCR s kontrolou formátu identifikátoru
-        \item naskenované RZ a dodatečné informace ukládané do lokální SQLite databáze
+        \item mobilní aplikace pro platformy \textbf{Android} a \textbf{iOS} vytvořená s využitím frameworku \textbf{Flutter}
+        \item kontinuální snímání scény fotoaparátem
+        \item rozpoznávání českých RZ ve scéně realizováno pomocí OCR s kontrolou formátu identifikátoru
+        \item naskenované RZ a dodatečné informace ukládané do lokální \textbf{SQLite} databáze
         \begin{itemize}
             \item adresa místa pořízení (buď ručně zadaná nebo automaticky dohledaná dle GPS souřadnic)    
             \item vlastní textová nebo hlasová poznámka
@@ -101,6 +105,7 @@ Katedra informatiky a výpočetní techniky
 
 \end{frame}
 
+\section{Oprava chyby ve frameworku Flutter}
 \begin{frame}
 \frametitle{Oprava chyby ve frameworku Flutter}
 \begin{itemize}
@@ -111,8 +116,8 @@ Katedra informatiky a výpočetní techniky
         \item někdy zapříčinila, že při skenování dvou různých aut byla v obou případech rozpoznána RZ prvního auta
     \end{itemize}
     \item bylo třeba analyzovat balíček \texttt{camera} z frameworku Flutter a chybu odhalit
-    \item následně provést její opravu a vše řádně zdokumentovat
-    \item vše nakonec předáno vývojářům tohoto frameworku pomocí služby \textbf{GitHub}\footnote{GitHub pull request - \url{https://github.com/flutter/plugins/pull/2655}}
+    \item následně provést její opravu, a vše řádně zdokumentovat
+    \item popis včetně opravy předán vývojářům tohoto frameworku pomocí služby \textbf{GitHub}\footnote{GitHub pull request - \url{https://github.com/flutter/plugins/pull/2655}}
 \end{itemize}
 \end{frame}
 
@@ -120,7 +125,7 @@ Katedra informatiky a výpočetní techniky
 \begin{frame}
 \frametitle{Výsledky práce}
 \begin{itemize}
-    \item rozšiřitelná \textbf{multiplatformní} mobilní aplikace rozpoznávající SPZ
+    \item rozšiřitelná \textbf{multiplatformní} mobilní aplikace rozpoznávající RZ
     \item implementovaná metoda rozpoznávání je rychlá a přesná
     \item poradí si i se \textbf{zhoršenými světelnými podmínkami}
 \end{itemize}
@@ -199,7 +204,7 @@ vhodné rozpoznat i přehledovou fotografii)?}
         \item rozpoznávání RZ je závislé na kontrole formátu identifikátoru RZ 
         \item bylo by třeba:
         \begin{itemize}
-            \item implementovat rozhraní \texttt{VrpValidator}, které validuje rozpoznané textové bloky ve snímku  
+            \item implementovat rozhraní \texttt{VrpValidator}, které validuje rozpoznané textové bloky ve snímku (kontrola formátu RZ) 
             \item po implementaci tohoto rozhraní přidat jeho instanci do kolekce používaných validátorů ve třídě \texttt{VrpFinderImpl}
 
             \item dle další specifikace této funkcionality upravit UI
