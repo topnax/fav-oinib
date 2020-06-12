@@ -3,7 +3,7 @@
 - **operační systém**
     - softwarová vrstva (základní programové vybavení), jejíž úlohou je spravovat hardware a poskytovat k němu programům jednotné rozhraní
     - zprostředkovává aplikacím **přístup** k hardwaru
-    - **koordinuje zdroje** a **poskytuje** služby alpikacím
+    - **koordinuje zdroje** a **poskytuje** služby aplikacím
         - zdroje = čas na procesoru, přidělená paměť disk, síťová karta
     - **program**, který slouží jako **prostředník** mezi aplikacemi a hardwarem počítače
 
@@ -16,7 +16,11 @@
 - **modul pro správu paměti**
     - virtuální paměť: stránkování, segmentace
 - **modul pro správu I/O**
+    - řízení periferních zařízení tak, aby co komunikace s CPU byla co nejeefektivnější
 - **modul pro správu souborů**
+    - implementace souborových systémů
+    - kontrola konzistence dat
+    - organizace dat ve formě souborů (a adresářů) tak, aby k nim bylo možné snadno přistupovat
 - **síťování**
 - **ochrana a bezpečnost**
 - **uživatelské rozhraní**
@@ -99,7 +103,7 @@
         - např. 1 - ukončení procesu
         - 2 - vytvoření dalšího procesu
         - 3 - zápis do souboru
-    2. do dalších registrů uložtím další potřebné parametry
+    2. do dalších registrů uložím další potřebné parametry
     3. provedu instrukci, která mě přepne do režimu jádra
         - INT 0x80 nebo _sysenter_
     4. v režimu jádra se zpracovává požadovaná služba
@@ -110,11 +114,11 @@
 - **přerušení = událost**
 - obsluha přerušení = obsluha události
 - asynchronní 
-    - může přijít kdykoliv, HW, stisk klávesy)
+    - může přijít kdykoliv, HW (stisk klávesy)
 - synchronní 
     - instrukce SW přerušení v programu - INT
     - přijde očekávaně
-- přerušení je _metoda pro asynchronní obsluhu událostí, kdy procesor přeruší vykonávání sledu instrukcí, vykoná obsluhu přerušení a pak pokračuje v předchozí činnost_
+- přerušení je _metoda pro asynchronní obsluhu událostí, kdy procesor přeruší vykonávání sledu instrukcí, vykoná obsluhu přerušení a pak pokračuje v předchozí činnosti_
 - rozdělení
     - **HW přerušení** - obsluha HW zařízení
         - původ v HW
@@ -141,7 +145,7 @@
 3. na zásobník je **uloženo stavové slovo procesoru (registru FLAGS)**
 4. je nastaven **zákaz přerušení** (změna bitu stavového slova), aby naši obsluhu nic dalšího nepřerušovalo (příklad - 2x stisknu klávesu)
 5. na zásobník **uložena adresa následující** instrukce, kterou chceme v daném procesu dále pokračovat
-6. z vektoru přerušení zjistí adresu podprogramu pro obluhu přerušení
+6. z vektoru přerušení zjistí adresu podprogramu pro obsluhu přerušení
 7. obsluha - rychlá
     - nejčastěji uložíme registry na zásobník a před koncem obsluhy je zas vybereme, abychom je procesu, který jsme přerušili nezměnili
     - na konci stejný stav procesoru (hodnoty registrů) jako na začátku (pokud neslouží k předání výsledku)

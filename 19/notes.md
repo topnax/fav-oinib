@@ -1,4 +1,4 @@
-# 19. Algoritmy pro kompresi dat - roztdělení algoritmů, princip základních algoritmů: RLE, LZW, Huffman, Aritmetická komprese, JPEG [KIV/PT]
+# 19. Algoritmy pro kompresi dat - rozdělení algoritmů, princip základních algoritmů: RLE, LZW, Huffman, Aritmetická komprese, JPEG [KIV/PT]
 - **cíl komprese**
     - redukovat objem dat za účelem
         - přenosu dat
@@ -15,7 +15,7 @@
     - **bezztrátová**
         - po kódování a dekódování je výsledek 100% shodný
         - nižší kompresní poměr
-        - používají se vyhrádně pro kompresi textu a v případech ,kdy nelze přípustit ztrátu informace
+        - používají se vyhrádně pro kompresi textu a v případech, kdy nelze přípustit ztrátu informace
     - **ztrátová**
         - po kódování a dekódování dochází ke ztrátě
         - obvykle vyšší kompresní poměr než bezztrátové
@@ -27,7 +27,7 @@
 - **statistické**
     - založené na četnosti výskytu znaků v komprimovaném souboru (Huffmanovo kódování, aritmetické kódování)
 - **slovníkové**
-    - založené na kódování všech vyskytujících se posloupností (LZV)
+    - založené na kódování všech vyskytujících se posloupností (LZW)
 - **transformační**
     - založené na ortogonálních popř. jiných transformacích (JPEG, waveletová komprese, fraktálová komprese)
 
@@ -63,13 +63,16 @@ output: #4ABBC#4DABD
 ## LZW
 - **Lempel-Ziv-Welch** metoda
 - princip
-    - vyhledávání opakujícíh se posloupností znaků
-    - ukládání těchto posloupností do slovníku pro další použití a přitazení jednoznakového kódu těmto posloupnostem
+    - vyhledávání opakujících se posloupností znaků
+    - ukládání těchto posloupností do slovníku pro další použití a přiřazení jednoznakového kódu těmto posloupnostem
     - jednoprůchodová metoda (nevyžaduje předběžnou analýzu souboru)
-    - kódvané znaky musí mít délku (počet bitů) větší než délka původních znaků (např. pro ASCII znaky se obvykle používá nová délka znaků 12 bitů popř. větší)
+    - kódované znaky musí mít délku (počet bitů) větší než délka původních znaků (např. pro ASCII znaky se obvykle používá nová délka znaků 12 bitů popř. větší)
     - při průchodu komprimovaným souborem se vytváří slovník (počet položek slovníku odpovídá hodnotě `2^(počet bitů nového kódu)`, kde prvních `2^(počet bitů nového kódu)` jsou znaky původní abecedy a zbývající položky tvoří posloupnosti znaků obsažené v kompriovaném souboru
+    - použití v GIF, ZIP, TIFF
 
 ![](img/lzw_1.png)
+
+- výstup: `65 66 67 256 258 257 68 259`
 
 ## Huffmanovo kódování
 - statistická metoda komprese
@@ -99,50 +102,64 @@ output: #4ABBC#4DABD
     - čím je kódovaný znak pravděpodobnější, tím se interval zůží méně a k zápisu delšího (to znamená hrubšího) intervalu stačí méně bitů
     - na konec stačí zapsat libovolné číslo z výsledného intervalu
 - algoritmus:
-    1. zjištění pravděpodobnosti _P(i)_ výskytuju jednotlivých znalů ve vstupním souboru
+    1. zjištění pravděpodobnosti _P(i)_ výskytu jednotlivých znaků ve vstupním souboru
     2. stanovení příslušných kumulativních pravděpodobností _K(0)=0_, _K(i) = K(i-1) + P(i-1)_ a rozdělení intervalu <0, 1) na podintervaly _I(i)_
     3. uložení použitých pravděpodobností
     4. vlastní komprese
-
 ![](img/arithmetic_1.png)
-
 - algoritmus pro dekompresi:
     1. rekonstrukce pouižitých pravděpodobností
     2. vlastní dekomprese
 
 ## JPEG
 - **Joint Photographic Experts Group**
+- **ztrátový formát**
+- využívá se "nedokonalosti" lidského zraku
+    - lidské oko špatně postřehne jemný šum
+    - v barevnosti postřehne ještě větší šumy
+- převod RGB na **YCbCr**
+    - odděli jas od barevnosti
+- **vhodný**
+    - klasické fotografie, k archivaci
+- **nevhodné**
+    - fotografie k postupnému upravování
+    - rozpoznávaná počítačem
 - v současné době patří mezi nejvíce používané komprese u obrázků
 - je vhodná pro komprimaci fotek, nevhodná pro např. technické výkresy (čárové výkresy) - dochází k viditelnému rozmazání
 - **princip:**
-    - části obrazu se transformují do frekvenční oblasti (výsledkem je matice "frekvenčních" koeficientů
+    - části obrazu se transformují do frekvenční oblasti (výsledkem je matice "frekvenčních" koeficientů)
     - z matice koeficientů se odstraní koeficienty odpovídající vyšším frekvencím (rychlejší změny jasu - např. hrany v obraze)
     - zbývající koeficienty se vhodným způsobem zkomprimují
-
 - **blokové schéma komprese**
-
 ![](img/jpg.png)
-
 - **blokové schéma dekomprese**
-
 ![](img/jpg_decomp.png)
-
+### DCT - Diskrétní kosinová transformace
+- transformuje kódovanou oblast do frekvenční oblasti
+- je bezztrátová a existuje k ní inverzní transformace
+- **postup**
+    1. zdrojový obraz se nejprve rozdělí  na bloky 8x8 pixelů
+    2. hodnoty jasu v každém bloku se nejprve transformují tak, aby byly centrované kolem nuly
+        - např. dřív 0-255, teď `-127` - `127`
+    3. provede se diskrétní kosinová transformace
+- _každý blok obrazu 8x8 lze vyjádřit jako lineární kombinaci bázových funkcí_
+- při DCT kompresi se pro každý blok najde 64 vah lineární kombinace
+![](img/dct.png)
 ### Kvantizace / dekvantizace
 - v tomto kroku se každý z 64 koeficientů DCT (IDCT) vydělí (vynásobí) odpovídajícím prvkem kvantizační matice a zaokrouhlí na nejbližší celé číslo
-    - v tomto kroku dochází ke ztrátě informace
-
+    - **v tomto kroku dochází ke ztrátě informace**
+- kvantizační matice je určena dle kvality, kterou chceme
+    - úroveň komprese
+- ignorujeme změny vysoké frekvence
 ### Kódování DCT koeficientů
-- koeficienty DCT se obvykle kódují pomocí statistických metod (Huffman, aritmetické kódování)
-- koeficient v pozici (0,0) je označen jakjo DC koeficient (stejnosměrná složka), ostatní se označují jako AC koeficienty
+- koeficienty DCT se obvykle **kódují pomocí statistických metod** (Huffman, aritmetické kódování)
+- koeficient v pozici (0,0) je označen jako DC koeficient (stejnosměrná složka), ostatní se označují jako AC koeficienty
 - vzhledem k tomu, že DC koeficienty sousedních bloků jsou obvykle silně korelované (tj. střední hodnota jasů sousedních bloků je podobná) kódují se DC koeficienty odděleně od AC koeficientů
-- kódování DC koéeficientů - diference hodnot sousedních bloků (DC prvního bloku se kóduje jako přímá hodnota)
+- kódování DC koeficientů - diference hodnot sousedních bloků (DC prvního bloku se kóduje jako přímá hodnota)
     - výsledná hodnota se kóduje jako dvojice
         - **(velikost, amplituda)**
 - kódování AC koeficientů - délkou běhu
     - nejprve se koeficienty uspořádají podle následujícího obrázku, pak se kódují jako trojice
         - **(RL, velikost) a (amplituda)**
 
-
-
 ![](img/jpg_2.png)
-

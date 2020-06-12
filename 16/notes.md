@@ -2,7 +2,7 @@
 
 ## Tabulka s přímým adresováním
 - `k -> Ak` je prosté zobrazení, každá položka tabulky má své místo jednoznačně určené hodnotou *Ak* přímo odvozenou z *k*
-- např. telefonní síť (klíčem je telefonníčíslo), telefonní seznam (klíčem je jméno)
+- např. telefonní síť (klíčem je telefonní číslo), telefonní seznam (klíčem je jméno)
 - klíč typu `int`
 - libovolná hodnota, např `double`
 - klíče jsou jen v rozsahu `0..K`, `K` je "přiměřené"
@@ -12,7 +12,7 @@
 - absence prvku v tabulce
     - závisí na aplikaci
     - `NaN` pro `double`
-    - `-1` pro přirozený čísla
+    - `-1` pro přirozená čísla
     - `null` pro reference
     - obecně: *vytvoření obalovací třídy*
         ```
@@ -22,7 +22,7 @@
         ```
         - implementace obsahuje pole referencí na instance `Element`
         - `null` v poli indikuje absenci hodnoty pro daný klíč
-        - je-li `<ValueType` např. reference, pak můžeme danému nějakému klí či přiřadit hodnotu `null`, jinému klíči nepřiřadit nic, a tyto dva případy rozlišit
+        - je-li `<ValueType>` např. reference, pak můžeme danému nějakému klíči přiřadit hodnotu `null`, jinému klíči nepřiřadit nic, a tyto dva případy rozlišit
 - problémy
     - často neznáme rozsah možných klíčů
     - rozsah nemusí být vůbec omezený
@@ -50,7 +50,7 @@
 - kolize rozptylové funkce
     - vznik
         - do ADT je vložena hodnota s klíčem *k1*
-        - v implementace je použita pozice v poli na indexu *i1 = H(k1)*
+        - v implementaci je použita pozice v poli na indexu *i1 = H(k1)*
         - do ADT je vkládána hodnota s klíčem *k2* takovým, že *H(k2) = H(k1)*
         - pozice v poli je již obsazena
     - řešení
@@ -62,9 +62,11 @@
             - vložíme prvek na začátek spojové struktury (konstantní čas přidání)
         - získání/odebrání prvku
             - musím postupně projít celý seznam, abych našel položku, kterou hledám
+            - `m` délka pole, do kterého ukládáme
+                - tj máme `m` spojových struktur
             - složitost => délka spojové strukutry je *n/m*, složitost tedy `Omega(n/m) = Omega(n)`
             - zlepšení složitosti, omezení poměru *n/m* (limit)
-            - při přepřekročení limitu přesuneme data do větší struktury, např. zdvojnásobíme *m*
+            - při překročení limitu přesuneme data do větší struktury, např. zdvojnásobíme *m*
             - složitost výběru je tedy s využitím optimalizace `Omega(n/m) = Omega(1)`
 - hash funkci je možné realizovat následujícími způsoby:
     - *i* je částí *k*
@@ -72,6 +74,18 @@
     - *i* je zbytkem po dělení rozsahem tabulky *p*
     - *i* je zbytkem po dělení *N*, *N* je nejbližší menší
 - příklady rozptylových funkcí
+    - pro číselný klíč
+        - použití více hashovacích funkcí `h0, h1, ..., hn`
+        - pokud dojde ke kolizi, použiji další hashovací funkci
+            ```
+            h0(k) = h(k)
+            h1(k) = (h(k) + s) mod p
+            .
+            .
+            .
+            hi(k) = (h(k) + is) mod p
+            ```
+        - kde `p` je rozsah tabulky a `s` je přirozené číslo nesoudělné s `p` (nesoudělnost zaručí možnost dostat se na každou pozici tabulky)
     - modulární metoda pro text
         - hodnoty v nějakém obecném rozsahu => operace modulo
         - klíčem je několik přirozených čísel *a0, a1,..., an*
@@ -81,7 +95,7 @@
         - problém přetečení => budeme rovnou modulovat
         - **některé indexy rozptylová funkce nikdy nedává**
             - např *a0, a1* v rozsahu 0..9
-            - počet kobinací 100
+            - počet kombinací 100
             - nejnižší možné *k*: 0, nejvyšší možné *k*: 81 
             - `k=73..80` nikdy nenastává
     - modulární metoda pro text s rozsahem
@@ -90,6 +104,6 @@
         - _h = k mod m_
         - rozsah *k* je o něco větší
         - rozptylová funkce generuje **všechny** možné indexy
-        - pokud *s* (rozsah položek klíče) a *m* (rozsah indexů pole) jsou stejné, pak záleží jen na porvní položce klíče
+        - pokud *s* (rozsah položek klíče) a *m* (rozsah indexů pole) jsou stejné, pak záleží jen na první položce klíče
             - podobný efekt, pokud je *m* dělitelné *s*
         - řešení => *m* jako **prvočíslo**

@@ -1,5 +1,27 @@
 # 20. Kryptografie - rozdělení metod, princip základních metod: steganografie, symetrické a asymetrické šifrování, kryptografická Hash, elektronický podpis. [KIV/PT]
 
+## Rozdělení metod
+- substituční
+- transpoziční
+- kombinace
+- symetrické
+    - blokové
+        - pracují s celými bloky dat
+    - proudové (streamové)
+        - pracují s jednotlivými bity zprávy zvlášť
+        - považovány za méně bezpečné
+        - pomalejší než blokové
+- asymetrické
+- monoalfabetická šifra
+    - jeden znak otevřeného textu -> jeden znak šifrového textu
+- homofonní substituční šifra
+    - jeden znak plaintextu -> jeden znak z monožiny znaků
+- polygramová substitční šifra
+    - skupina znaků plaintextu -> skupina znaků šifrového textu
+- polyalfabetická substituční šifra
+    - spojení několika jednoduchých šifer
+    - postupná aplikace
+
 ## Steganografie
 - _steganos_ = zakryté, tajné
     - _utajené psaní_ => utajení existence zprávy
@@ -71,7 +93,7 @@
 
 ### RSA
 - dnes nejznámější a nejpoužívanější
-- dostatečná délka klíče => považván za bezpečný
+- dostatečná délka klíče => považován za bezpečný
 - vhodný pro šifrování i pro el. podpis
 - princip:
     - rozklad velkého čísla na součin prvočísel (faktorizace) => **velmi obtížná úloha**
@@ -88,7 +110,7 @@
 - hash => **jednocestná funkce, která z libovolně dlouhého textu vyrobí krátký řetězec konst. délky**
 - motivace
     - "rychlost" asymetrických šifer
-    - závislost bezpešnosti na volbě klíče a obsahu zprávy (ovlivnitelné člověkem)
+    - závislost bezpečnosti na volbě klíče a obsahu zprávy (ovlivnitelné člověkem)
 - **vlastnosti hashovací funkce**
     1. _P_ -> jednoduchost výpočtu _H(P)_
     2. _H(P)_ -> nemožnost nalezení _P_
@@ -135,8 +157,8 @@
 - vlastnosti
     - příjemce
         - možnost ověření identity odesílatele zprávy
-        - nemožnsot změny obsahu zprávy
+        - nemožnost změny obsahu zprávy
     - odesílatel
         - nemožnost pozdějšího odmítnutí obsahu dig. podepsané zprávy
 - certifikáty
-    - zajištění přenosu veřejných klíčů po nezabezpečeném kanálu;
+    - zajištění přenosu veřejných klíčů po nezabezpečeném kanálu

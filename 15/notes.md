@@ -11,7 +11,7 @@
     - nalezení minimálního/maximálního klíče v ADT
     - nalezení minimální/maximální hodnoty v ADT
     - vybrání všech prvků v pořadí klíčů
-- složitost:
+- složitost pro alternativní implementace:
     - seřazené pole
         - hledání: `O(log(n))` (půlení intervalu)
         - vložení: `Omega(n)`
@@ -27,7 +27,17 @@
 - implementace
     - binární strom
     - každému vrcholu je přiřazena hodnota - klíče
-    - klíče lze porovvnávat (větší/menší)
+    - klíče lze porovnávat (větší/menší)
+    - složitost operací:
+        - _h_ => **výška stromu**
+        - složitost hledání, vkládání a odstraňování je `O(h)` v nejhorším případě
+        - **degenerovaný strom**
+            - může vzniknout, pokud přidáváme již seřazenou posloupnost
+            - `h = N - 1`
+            - složitosti jsou `Omega(n)`
+        - **úplný strom**
+            - `g = ceil(log2(n)`
+            - složitosti jsou `O(log(n))`
 - definující vlastnost
     - je-li *x* klíč uzlu `n`, pak
         - klíče uzlu `n.left` a jeho potomků jsou menší než *x*
@@ -42,9 +52,9 @@
 - **ALV strom je výškově vyvážený binární vyhledávací strom, pro který platí, že pro libovolný vnitřní uzel stromu se výška levého a pravého syna liší nejvýše o 1**
 ![](avl_ex.png)
 
-- vyváženost AVL stromu se kontroluje pok aždé operaci vložení a zrušení prvku
-    - v případě, že je vyváženost porušenoa, provádí opětovné vyvážení pomocí jedné popř. několika rotací v jednotlivých částech stromu
-- implementace je obdobná jako u BVS, datová struktura pro uzel stromu je doplněna o celočíselnou proměnnou *c(v)*, reprezentující stupeň vyváženosti uzlu, který může nebývat následujících hodnot:
+- vyváženost AVL stromu se kontroluje pokaždé operaci vložení a zrušení prvku
+    - v případě, že je vyváženost porušena, provádí opětovné vyvážení pomocí jedné popř. několika rotací v jednotlivých částech stromu
+- implementace je obdobná jako u BVS, datová struktura pro uzel stromu je doplněna o celočíselnou proměnnou *c(v)*, reprezentující stupeň vyváženosti uzlu, který může nabývat následujících hodnot:
     - 0, stejně vysoké
     - 1, pravý podstrom je o 1 vyšší
     - 2, pravý podstrom je o 2 vyšší
@@ -63,7 +73,7 @@
     ![](img/rot_2.png)
 
 # B-stromy
-- vyváženný strom, který je optimalizován pro případ, kdy je část stromu, případně celý strom, uložen na vnější paměti
+- vyvážený strom, který je optimalizován pro případ, kdy je část stromu, případně celý strom, uložen na vnější paměti
 - vzhledem k tomu, že přístup na diskovou paměť je časově náročný, B-strom je navržen tak, aby optimalizoval (a minimalizoval) počet přístupů do vnější paměti
 - B-strom řádu *m* je strom, kde každý uzel má maximálně *m* následníků a platí v něm:
     - počet klíčů v každém vnitřním uzlu je o 1 menší než počet následníků
@@ -76,10 +86,12 @@
     - pokud dojde k přeplnění nadřazené stránky, předchozí postup se opakuje dokud nedojde k zařazení nebo k vytvoření nového kořene
     - analýza
         - výška *h* a řád *m*
-        - celkový počet je `m^(h+1) - 1`
+        - maximální počet položek je `m^(h+1) - 1`
             - `m=5, h=2, 5^3 - 1 = 124`
 ## Využití
 
 - **B-tree**
     - využití v databázích a souborových systémech
     - optimalizace vyhledávání, multilevel indexing 
+- **BVT**
+    - ideový základ pro konstrukci složitějších vyhledávacích datových struktur, konkrétně pro složené klíče a dotazy s částečně zadanými klíči.

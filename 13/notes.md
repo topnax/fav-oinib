@@ -75,7 +75,7 @@
         - potomci vrcholu s indexem *i* mají přiřazeny indexy *(2i)* a *(2i + 1)*
         - potom předek vrcholu s indexem *x* leží na indexu *x/2*
         - strom o hloubce *h* má vrcholy s maximálním indexem *2^(h+1) - 1*
-        - vrchol je reprezentovýn svýmm indexem
+        - vrchol je reprezentovýn svým indexem
         - vrcholu musí být přiřazena **data**, která jsou uložena v poli
             - podle dat se určí, zda je vrchol přítomen
         - data přiřazená vrcholu

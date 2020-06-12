@@ -18,6 +18,9 @@ x=x1 x2..xn € T*     y=y1 y2...yn € T*
         - zrušení symbolu _a € T (a -> e)_
 ### Edit distance
 ![](img/ed_example.png)
+|REPLACE|INSERT|
+|---|---|
+|**DELETE**|`minimum z ostatních`|
 - rozdělení na menší problémy
 - porovnáváme dva řetězce _M_ a _N_
 - _alpha_ = M[:-1]
@@ -44,12 +47,13 @@ ed_dist_recursive(a, b):
             ed_dist_recursive(a[:-1], b) + 1)
 ```
 
+
 ### LCS 
 - nalezení nejdelšího společného podřetězce
-- _AGTCAACGTT_ a _GTTCGATGTG_
+- _AGTCAACGTT_ a _GTTCGACTGTG_
     - podřetězce: _AGTG_, _GTCACGT_
 - jak je nalézt?
-    - hrubá síla `O(n*2^m`
+    - hrubá síla `O(n*2^m)`
     - dynamické programování `O(nm)`
 - postup
     - nalezneme délku LCS a podél cesty, kterou budeme procházet, si budeme nechávat značky, které nám pomohou nalézt výslednou nejdelší společnou sekvenci
@@ -60,6 +64,7 @@ ed_dist_recursive(a, b):
 ![](img/lcs_1.png)
 ![](img/lcs_2.png)
 ![](img/lcs_3.png)
+
 
 
 ### SCS 

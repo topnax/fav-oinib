@@ -24,11 +24,11 @@
     - *dokončený*
 - složitost
     - `O(|V|+|E|)`
-- pokud vyhledávaný vrhol je vzdálený od zdrojového vrcholu, bývá rychlejší DFS a naopak
+- pokud vyhledávaný vrchol je vzdálený od zdrojového vrcholu, bývá rychlejší DFS a naopak
 
 ## Topologické řazení
 - **vstup**
-    - orientovaný graf vez cyklů
+    - orientovaný graf bez cyklů
 - **výstup**
     - očíslování vrcholů takové, že **hrany vedou jen od nižšího čísla k vyššímu**
 - příklad
@@ -49,7 +49,7 @@
     - mezi všemi uspořádanými dvojicemi vrcholů
 - kontrolujeme trojúhelníkovou nerovnost `cj > ci + cij`
     - `cj` => cena dosud nejkratší cesty
-    - `cij` =>  cena hran mezi vrcholi `vi` a `vj`
+    - `cij` =>  cena hran mezi vrcholy `vi` a `vj`
 
 ### Dijkstrův algoritmus
 
@@ -60,7 +60,7 @@
 - algoritmus
     - z navštívených vrcholů tvoříme skupinu, nejprve obsahuje pouze počáteční vrchol `S`
     - postupně přidáváme uzly až do nalezení cílového uzlu
-    - v každém kromu přidáváme do skupiny vrchol vně mraku s nejmenší vzdáleností ``d(v)``
+    - v každém kroku přidáváme do skupiny vrchol vně mraku s nejmenší vzdáleností ``d(v)``
     - opravíme vzdálenosti vrcholů sousedících s ``v``
 - relaxace hran
     - aktualizace cest

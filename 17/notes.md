@@ -72,7 +72,7 @@
 - základní myšlenka:
     - kontrolní součet pro vzor _P_ (délky _m_)
     - kontrolní součet pro každý podřetězec řetězce _T_ délky _m_
-    - procházet řetězcem _T_ a porovnat kontrolní součet každého podřetězce s kontrolním součtem vzoru. POkud dojde ke shodě vzoru provést test znak po znaku
+    - procházet řetězcem _T_ a porovnat kontrolní součet každého podřetězce s kontrolním součtem vzoru. Pokud dojde ke shodě vzoru provést test znak po znaku
 
 ![](img/rk_tut.png)
 ![](img/rk_example.png)

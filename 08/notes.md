@@ -2,13 +2,13 @@
 
 - umožňuje vložení prvku a jeho odebrání z jakékoliv pozice
 - specifikace pozice
-    - index (často neumíme najít v `Theta(1)`
+    - index (často neumíme najít v `Theta(1)`)
     - aktuální pozice
 - aktuální pozice v seznamu - ukazovátko
     - je možné posouvat vpřed
     - jemožné posunout zpět na začátek
     - operace v `Theta(1)`
-    - pro praktické účely tyto úkon často stačí
+    - pro praktické účely tyto úkony často stačí
     - ukazuje na prvky, mezi prvky?
         - lepší mezi prvky
         - jednoznačné vkládání
@@ -23,8 +23,40 @@
     - přístup k libovolnému prvku na konkrétním indexu je `Omega(n)`
     - neumožňuje práci na více místech seznamu současně
     - lze napodobit funkci zásobníku, nikoliv fronty (s rozumnou složitost)
+    - přidání prvku
+        ```
+        void insert(<typ> e){
+            Link newLink = new Link();
+            newLink.data = e;
+            if (current == null){ // ukazovatko na zacatku
+                newLink.next = first; // funguje i kdyz first == null;
+                first = newLink;
+            }
+            else { // bezny pripad
+                newLink.next = current.next;
+                current.next = newLink;
+            }
+        }
+        ```
+    - odstranění prkvu **napravo** od ukazovátka
+        ```
+        void remove(){
+            if (first == null) { // neni co odstranit
+                throw new Exception();
+            }
+            if (current == null) { // odstranujeme prvni prvek
+                first = first.next;
+            }
+            else if (current.next == null) { // ukazovatko na konci, neni co o
+                throw new Exception();
+            }
+            else{ // vsechno v poradku
+                current.next = current.next.next;
+            }
+        }
+        ```
 - **iterátor**
-    - návrhový vzor určený k interaci nějaké kolekce
+    - návrhový vzor určený k iteraci nějaké kolekce
     - operace
         - vybrání dat napravo `get()`
         - posunutí doprava `next()`
