@@ -1,4 +1,8 @@
 # 26. Plánování procesů v interaktivních systémech
+
+- **interaktivní systémy**
+    - potřeba minimalizace doby odpovědi
+    - dbát na efektivitu (přepínání mezi procesy je drahé)
 - potřeba docílit, aby proces neběžel "příliš dlouho"
     - možnost obsloužit další procesy - na každého se dostalo
 - každý proces - jedinečný a nepredikovatelný

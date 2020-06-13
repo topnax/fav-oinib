@@ -1,4 +1,4 @@
-# 22. Proces, implementace procesu, základní služby OS pro práci s procesy. Paralelní procesy, prostředky pro popis paralelním procesů, vlákna [KIV/ZOS]
+# 22. Proces, implementace procesu, základní služby OS pro práci s procesy. Paralelní procesy, prostředky pro popis paralelních procesů, vlákna [KIV/ZOS]
 - **proces**
     - instance běžícího programu
 - **adresní prostor** procesu
@@ -18,9 +18,9 @@
 - běžící program včetně obsahu čítače instrukcí, registrů, proměnných, běží ve vlastní paměti
 - reálný procesor - přepíná mezi procesy (multiprogramování)
 - **pseudoparalelní běh**
-    - v jednu chváli aktivní pouze **jeden** aktivní proces
+    - v jednu chvíli aktivní pouze **jeden** aktivní proces
     - po určité době **pozastaven** a spuštěn další
-    - po určité doě všechny procesy vykonají část své činnost
+    - po určité době všechny procesy vykonají část své činnosti
 
 ## Základní služby OS pro práci s procesy
 - vytvoření nového procesu
@@ -31,7 +31,7 @@
     - `ExitProcess` ve Win32
 - čekání na dokončení potomka
     - `wait(waitpid)` v UNIXu
-    - `WaitForSIngleObject` ve Win32
+    - `WaitForSingleObject` ve Win32
 - alokace a uvolnění paměti procesu
 - komunikace mezi procesy (IPC)
 - identifikace ve víceuživatelských systémech
@@ -72,7 +72,7 @@
     - textový procesor
     - www servery
 - **multithreading**
-    - proces začíný svůj běh s jedním vláknem, ostatní vytvoří za běhu programově
+    - proces začíná svůj běh s jedním vláknem, ostatní vytvoří za běhu programově
 
 ### Precendenční grafy
 - _process flow graph_
@@ -96,7 +96,7 @@
 ![](img/fjc_png.png)
 
 ## Abstraktní primitiva cobegin a coend
-- specifikuje sekvence programu, která má být hbed spuštěna paralelně
+- specifikuje sekvence programu, která má být hned spuštěna paralelně
 - každé Ci je autonomní segment kódu (blok)
 - samostatné vlákno pro všechna Ci
 - Ci běží nezávisle na ostatních
@@ -106,4 +106,4 @@
 ![](img/cobegin_2.png)
 
 - maximální paralelismus
-    - část výpočtu spustím ihned jak ej to možné
+    - část výpočtu spustím ihned jak je to možné

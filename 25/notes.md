@@ -1,6 +1,9 @@
 # 25. Plánování úloh a procesů v dávkových systémech
 - **dávkové systémy**
-    - dlouhý čas na CPU omezí se přepínání úloh
+    - spustit další úlohu, nechat ji běžet do konce
+    - uživatel s úlohou nekomunikuje, zadá program a vstupní data
+    - o výsledku je uživatel informován později, např. mailem
+    - dlouhý čas na CPU => omezí se přepínání úloh
 - **plánovač**
     - rozhodovací mód
         - okamžik, kdy jsou vyhodnoceny priority procesu a vybrán proces pro běh (KDY)
@@ -25,11 +28,12 @@
 
 ## Rozhodovací módy
 - **nepreemptivní**
-    - proces využívá CPU, dokud se jej sám nevzdá (např. I/O)
+    - proces využívá CPU, dokud se jej sám nevzdá (např. I/O, samotné ukončení procesu)
     - jednoduchá implementace
     - vhodné pro dávkové systémy
     - nevhodné pro interaktivní a RT systémy
 - **preemptivní**
+    - pŕoces lze přerušit **KDYKOLIV** během jeho CPU Burstu a naplánovat jiný
     - kdy dojde k vybrání nového procesu pro běh?
         - přijde nový proces
         - periodicky - kvantum (interaktivní systémy)
@@ -41,7 +45,7 @@
 - určuje prioritu procesu v systému
 - funkce, bere v úvahu parametry procesu a systémové parametry
 - externí priority
-    - třídy uživatalů, systémové procesy
+    - třídy uživatelů, systémové procesy
 - priority odvozené z chování procesu
 - většinou dvě složky - statická a dynamická priority
     - **statická** - přiřazena při startu procesu
@@ -75,33 +79,35 @@
         - I/O vázané úlohy znevýhodněny před výpočetně vázanými
     3. další možná modifikace -> po dokončení I/O na začátek fronty připravených
 - **příklad**
-
 ![](img/fcfs.png)
 
 ## SJF
 - **S**hortest **J**ob **F**irst
 - nejkratší úloha jako první
 - předpoklad => známe přibližně dobu trvání úloh
-- **neepremtivní**
+- **nepremptivní**
     - jedna fronta příchozích úloh
     - plánovač vybere vždy úlohu s nejkratší dobou běhu
-
 ![](img/sjf.png)
 
 ## SRT
 - **S**hortest **R**emaining **T**ime
 - úlohy mohou přicházet **kdykoliv** (nejen v čase nula)
-- **preemptivní** (přechod běžící - připravený)
+- **preemptivní při příchodu úlohy** (přechod běžící - připravený) 
     - plánovač vždy vybere úlohu, jejíž **zbývající** doba běhu je nejkratší
 - kdy dojde k preempci
     - právě prováděné úloze zbývá 10 minut, do systému právě teď přijde úloha s dobou běhu 1 minutu - systém **prováděnou** úlohu **pozastaví** a nechá běžet novou úlohu
 - možnost vyhladovění dlouhých úloh => neustále předbíhány krátkými
-
 ![](img/srt.png)
 
 ## Multilevel feedback
+- N prioritních úrovní
+    - co úroveň, to frotna
+- úloha vstoupí do systému s **nejvyšší** prioritou 
+- na každé úrovni je stanoveno maximum času, který může daná úloha běžet (L1=T, L2=T\*2,...)
+    - při překročení tohoto limitu se sníží její priorita
+- **procesor obsluhuje nejvyšší neprázdnou frontu**
 - upřednostňuje I/O vázané úlohy - déle se drží ve vysokých frontách ("úlohy co ještě moc času nenapočítaly")
-
 ![](img/mlf.png)
 
 ## Shrnutí

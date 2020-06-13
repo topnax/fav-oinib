@@ -41,17 +41,13 @@ povol přerušení
 - není vhodné pro uživatelské procesy
 
 ## Aktivní čekání
-- zápis a čtení ze společné datové oblasti jsou nedělitelné operace
-    - současný přístup více procesů ke stejné oblasti povede k sekvenčním odkazům v neznámém pořadí
-    - tedy 2 procesy chtějí přistoupit -> výsledek sekvenční provedení CPU instrukcí
-    - platí pro data <= délce slova
-- kritické sekce nemohou mít přiřazeny prioritu
-- relativní rychlost procesů je neznámá
-- proces se může pozastavit mimo kritickou sekci
+- **průběžné testování** proměnné ve smyčce, dokud nenabude očekávanou hodnotu
+- poté čekání skončí
+- lze použít, když předpokládádáme krátké čekání
 - problémy
     - ztracený čas CPU
-        - jeden proces v KS, další může ve smyčce přistupovat je společným proměnnným
-        - krade paměťové cykly aktivnímíu procesu
+        - jeden proces v KS, další může ve smyčce přistupovat jen ke společným proměnným
+        - krade paměťové cykly aktivnímu procesu
     - problém inverze priorit
         - pokud procesy mají prioritu
         - dva procesy, jeden s vysokou H a druhý s níkou L prioritou, H se spustí jakmile je připraven
@@ -155,7 +151,7 @@ V(s);
 - procedury a funkce
     - viditelné a volatelné vně monitoru
 - speciální typ proměnné nazývané **podmínka** (condition variable)
-    - definovýny a použity pouze uvnitř monitoru
+    - definovány a použity pouze uvnitř monitoru
     - nejsou proměnné v klasickém smyslu, neobsahují hodnotu
     - spíše odkaz na určitou událost nebo stav výpočtu
     - představují frontu procesů, které na danou podmínku čekají

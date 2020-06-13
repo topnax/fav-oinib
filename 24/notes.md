@@ -46,11 +46,11 @@
     - všechny zdroje očíslovány, požadavky musí být prováděny v číselném pořadí
         - alokační zdroj nemůže mít cykly
         - problém - je těžké nalézt vhodné očíslování pro všechny zdroje
-        - není použitelné obecně, ale ve speciálních přápadech výhodné (jádro OS, db systém,...)
+        - není použitelné obecně, ale ve speciálních případech výhodné (jádro OS, db systém,...)
 - **dvoufázové zamykání**
-    - používanjé v DB systémech
+    - používané v DB systémech
     - **první fáze**
-        - zamknutí všech potřebných zánků v číselném pořadí
+        - zamknutí všech potřebných zámků v číselném pořadí
         - pokud je některý zamknut jiným procesem, tak uvolní všechny zámky a zkusí znovu
     - **druhá fáze**
         - čtení a zápis, uvolňování zámků
@@ -100,7 +100,7 @@
     - zasílání zpráv
         - na stejném uzlu i na různých uzlech
 - **problém sdílené paměti**
-    - IPC vyžadike umístění objektu ve sdílené paměti
+    - IPC vyžaduje umístění objektu ve sdílené paměti
     - někdy to není vhodné
         - bezpečnost => globální data přístupná kterémukoliv procesu/vláknu (co, když nebudou řídit přístup semaforem, mutexem?)
     - někdy to není možné
@@ -135,7 +135,7 @@
 - zprávy zpracovávány většinu v pořadí FIFO
 - velikost fronty (_buffering_)
     - **randezvous**
-        - nulová délka fronty zpráv
+         nulová délka fronty zpráv
         - žádná zpráva nebude čekat
         - odesílatel se zablokuje a čeká na příjemce
     - **omezená kapacita**
@@ -204,11 +204,11 @@ coend
 ### Problém čítařů a písařů
 - modeluje přístup do databáze
 - rezervační systém (místenky, letenky)
-- množina procesů, které chtějí přistsupovat
+- množina procesů, které chtějí přistupovat
     - souběžné čtení lze
     - výhradní zápis
 - často praktická úloha, lze realizovat s předností čtenářů nebo s předností písařů
-    - pro komerční aplikace je samozžejmě vhodnější přednost písařů
+    - pro komerční aplikace je samozřejmě vhodnější přednost písařů
 
 ### Spící holič
 
